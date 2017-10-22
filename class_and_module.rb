@@ -47,5 +47,97 @@ class Test
 end
 
 
+# クラスメソッドの定義
+
+# あとから定義
+# その１ class << クラス名 ~ end
+class HelloWorld
+end
+
+class << HelloWorld
+  def hello(name)
+    puts "#{name} said hello."
+  end
+end
+
+HelloWorld.hello('john')
+HelloWorld::hello('john')
 
 
+# あとから定義
+# その２ class << クラス名 ~ end
+class HelloWorld
+end
+
+def HelloWorld.hello(name)
+  puts '#{name} said hello.'
+end
+
+HelloWorld.hello('john')
+HelloWorld::hello('john')
+
+
+# まとめて定義
+# その１ class << self ~ end
+class HelloWorld
+  class << self
+    def hello(name)
+      puts '#{name} said hello.'
+    end
+  end
+end
+
+HelloWorld.hello('john')
+HelloWorld::hello('john')
+
+
+# よくある定義
+# self.method
+class HelloWorld
+  def self.hello(name)
+    puts '#{name} said hello.'
+  end
+end
+
+HelloWorld.hello('john')
+HelloWorld::hello('john')
+
+
+# クラス変数
+# @@variable
+# インスタンスで共有できる値
+
+
+# アクセス修飾子
+# public
+#   メソッドをインスタンスメソッドとして使えるようにする
+# private
+#   メソッドをレシーバを指定して呼び出せないようにする
+#   サブクラスからの呼び出しが可能（！）
+#  (レシーバを省略した形式でしか呼べないため、インスタンスの外側から利用できなくなる）
+# protected
+#   メソッドを同一のクラスであれば、インスタンスメソッドとして使えるようにする
+
+# 注意：Rubyではサブクラスからスーパークラスのprivate methodを呼び出せる
+#
+
+
+# 特異クラス
+# 　そのオブジェクトだけで利用できるメソッド
+# （特異メソッド）を追加できる
+str1 = 'ruby'
+str2 = 'ruby'
+
+class << str1
+  def hello
+    puts 'hello'
+  end
+end
+
+str1.hello #=> hello
+str2.hello #=> NoMethodError
+
+
+# モジュール
+#　インスタンスを持つことが出来ない
+#　継承できない
